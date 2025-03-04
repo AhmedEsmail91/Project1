@@ -17,7 +17,7 @@ AuthRouter.post('/signout',signout);
 const UserRouter=express.Router();
 
 UserRouter.get('/',getUsers);
-UserRouter.post('/create',addUser);
+UserRouter.post('/create',validation(signupValidation),addUser);
 UserRouter.get('/:id',getUserById);
 UserRouter.put('/update/:id',updateUser);
 

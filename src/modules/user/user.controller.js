@@ -13,6 +13,7 @@ export const signup=async (req,res,next)=>{
 };
 
 export const signin=async (req,res,next)=>{
+    // res.json({message:"Signin successful"});
     const user = await userModel.findOne({"email":req.body.email});
     if (!(user && bcrypt.compareSync(req.body.password, user.password))) {
         return res.status(400).json({message: "Invalid email or password"});
@@ -34,11 +35,11 @@ export const addUser=async (req,res,next)=>{
     res.json(user);
 }
 export const getUsers=async (req,res,next)=>{
-    const users = await userModel.find({}, {name: 1,_id:0});
+    const users = await userModel.find();
     res.json(users);
 }
 export const getUserById=async (req,res,next)=>{
-    const user=await userModel.findById(req.params.id);
+    const user=await userModel.findOne({_id: req.params.id}).populate('notes');
     res.json(user);
 }
 export const updateUser=async (req,res,next)=>{
